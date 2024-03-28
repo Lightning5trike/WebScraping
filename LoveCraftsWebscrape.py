@@ -1,17 +1,36 @@
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd 
+import xlsxwriter
+
+yarnInfo = []
+# pricing = []
 
 page_to_scrape = requests.get("https://www.lovecrafts.com/en-gb/l/yarns")
 soup = BeautifulSoup(page_to_scrape.text, "html.parser")
-yarnInfo = soup.findAll("span", attrs={"class":"product-card__subtitle"})
+yarnType = soup.findAll("span", attrs={"class":"product-card__subtitle"})
 yarnPrice = soup.findAll("small", attrs={"class":"product-price lc price lc-product-card_price"})
 
+# for yarn in yarnType:
+#     yarnInfo.append(yarn)
+# for price in yarnPrice:
+#     pricing.append(price)
 
-#fix pandas thing or find new way to write to an excel page
-df = pd.DataFrame()
+for type, price in zip (yarnType, yarnPrice):
+    yarnInfo.append([type], [price])
 
-df['yarnInfo'] = yarnInfo 
-df['yarnPrice'] = yarnPrice
+df = pd.DataFrame(yarnInfo)
 
-df.to_excel('LoveCraftsScrape.xlsx', index = False) 
+df['Info'] = yarnInfo[0::2] 
+df['Price'] = yarnInfo[1::2] 
+
+# df['yarnType'] = yarnInfo[]
+# df['yarnPrice'] = pricing[]
+
+writer = pd.ExcelWriter('LoveCraftsScrape.xlsx', engine='xlsxwriter')
+df.to_excel(writer, sheet_name='welcome', index=False)
+writer._save()
+
+# can now write to file
+# current issue: not writing the correct information to the file
+# i think something is wrong with the listing
