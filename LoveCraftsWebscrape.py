@@ -8,7 +8,16 @@ length = []
 weight = []
 pricing = []
 
-page_to_scrape = requests.get("https://www.lovecrafts.com/en-gb/l/yarns?filter-yarnWeight.en-GB=Aran&filter-fibers.en-GB=Wool")
+#find way to make this page go to all the other pages
+#https://www.lovecrafts.com/en-gb/l/yarns?page=2
+#https://www.lovecrafts.com/en-gb/l/yarns?page=3
+#all th way to page
+#https://www.lovecrafts.com/en-gb/l/yarns?page=28
+
+#could be done by using a while loop or a in range counter tbd
+
+
+page_to_scrape = requests.get("https://www.lovecrafts.com/en-gb/l/yarns")
 soup = BeautifulSoup(page_to_scrape.text, "html.parser")
 yarnTitle = soup.findAll("h2", attrs={"class":"product-card__title"})
 yarnType = soup.findAll("p", attrs={"class":"product-card__subtitle"})
@@ -27,10 +36,11 @@ for name, yarn, price in zip(yarnTitle, yarnType, yarnPrice):
 
 df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing)), columns = ['name', 'fibre', 'length', 'weight', 'pricing'])
 
-writer = pd.ExcelWriter('LoveCraftsScrape.xlsx', engine='xlsxwriter')
-df.to_excel(writer, sheet_name='welcome')
+print(df)
+# writer = pd.ExcelWriter('LoveCraftsScrape.xlsx', engine='xlsxwriter')
+# df.to_excel(writer, sheet_name='welcome')
 
-workbook = writer.book
-worksheer = writer.sheets['welcome']
+# workbook = writer.book
+# worksheer = writer.sheets['welcome']
 
-writer.close()
+# writer.close()
