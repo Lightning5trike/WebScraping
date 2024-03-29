@@ -27,12 +27,11 @@ for name, yarn, price in zip(yarnTitle, yarnType, yarnPrice):
 
 #do the maths for seperate columns to figure out pound per meter
 
-
 df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing)), columns = ['name', 'fibre', 'length', 'weight', 'pricing'])
 
 # print(df)
 
-writer = pd.ExcelWriter('LoveCraftsScrape.xlsx', engine='xlsxwriter')
+writer = pd.ExcelWriter('LoveCraftTrial.xlsx', engine='xlsxwriter')
 df.to_excel(writer, sheet_name='welcome')
 
 workbook = writer.book
