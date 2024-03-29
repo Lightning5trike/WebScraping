@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd 
-# import xlsxwriter
 
 yarnInfo = []
 pricing = []
@@ -17,8 +16,6 @@ for price in yarnPrice:
     pricing.append(price)
 
 df = pd.DataFrame(list(zip(yarnInfo, pricing)), columns = ['yarn info', 'pricing'])
-
-# print(df)
 
 writer = pd.ExcelWriter('LoveCraftsScrape.xlsx', engine='xlsxwriter')
 df.to_excel(writer, sheet_name='welcome')
