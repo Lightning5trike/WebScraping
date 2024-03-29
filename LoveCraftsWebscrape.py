@@ -2,21 +2,33 @@ from bs4 import BeautifulSoup
 import requests
 import pandas as pd 
 
-
-yarnInfo = []
+fibres = []
+length = []
+weight = []
 pricing = []
 
-page_to_scrape = requests.get("https://www.lovecrafts.com/en-gb/l/yarns")
+
+#add in the yarn info so i candifferentiate the types of yarn
+page_to_scrape = requests.get("https://www.lovecrafts.com/en-gb/l/yarns?filter-yarnWeight.en-GB=Aran&filter-fibers.en-GB=Wool")
 soup = BeautifulSoup(page_to_scrape.text, "html.parser")
 yarnType = soup.findAll("p", attrs={"class":"product-card__subtitle"})
 yarnPrice = soup.findAll("span", attrs={"class":"lc-price__regular"})
 
-for yarn in yarnType:
-    yarnInfo.append(yarn)
-for price in yarnPrice:
-    pricing.append(price)
+for yarn, price in zip(yarnType, yarnPrice):
+    yarn_text = yarn.get_text().strip()
+    splitter = yarn_text.split(", ")
+    if len(splitter) == 3:
+        fibres.append(splitter[0])
+        length.append(splitter[1])
+        weight.append(splitter[2])
+        pricing.append(price.get_text())
 
-df = pd.DataFrame(list(zip(yarnInfo, pricing)), columns = ['yarn info', 'pricing'])
+
+#do the maths for seperate columns to figure out pound per meter
+
+df = pd.DataFrame(list(zip(fibres, length, weight, pricing)), columns = ['fibre', 'length', 'weight', 'pricing'])
+
+print(df)
 
 writer = pd.ExcelWriter('LoveCraftsScrape.xlsx', engine='xlsxwriter')
 df.to_excel(writer, sheet_name='welcome')
@@ -25,5 +37,3 @@ workbook = writer.book
 worksheer = writer.sheets['welcome']
 
 writer.close()
-
-#sort the data in the Info sectoion into defferent colums and technically into different lists
