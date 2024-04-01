@@ -53,13 +53,13 @@ for old in pricing:
         
 
 for x, y in zip(meterageOnly, strippedPricing):
-    ppm = round(y/x, 4)
+    ppm = round((y/x), 4)
     pricePerMeter.append(ppm)
 
 
     df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing, meterageOnly, strippedPricing, pricePerMeter)), columns = ['name', 'fibre', 'length','weight', 'pricing', 'meters', 'price(kinda)', 'ppm'])
 
-    writer = pd.ExcelWriter('LoveCraftsScrape.xlsx', engine='xlsxwriter')
+    writer = pd.ExcelWriter('LoveCraftsWebscrape.xlsx', engine='xlsxwriter')
     df.to_excel(writer, sheet_name='welcome')
 
     workbook = writer.book
