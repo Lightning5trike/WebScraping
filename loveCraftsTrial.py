@@ -1,3 +1,4 @@
+#Trial page using a very filtered version of the yarn page
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd 
@@ -5,8 +6,10 @@ import pandas as pd
 yarnName = []
 fibres = []
 length = []
+meterageOnly = []
 weight = []
 pricing = []
+strippedPricing = []
 
 page_to_scrape = requests.get("https://www.lovecrafts.com/en-gb/l/yarns?filter-yarnWeight.en-GB=Aran&filter-fibers.en-GB=Wool")
 soup = BeautifulSoup(page_to_scrape.text, "html.parser")
@@ -25,11 +28,21 @@ for name, yarn, price in zip(yarnTitle, yarnType, yarnPrice):
         pricing.append(price.get_text().strip())
 
 
-#do the maths for seperate columns to figure out pound per meter
+for meters in length:
+    metersStripped = meters.strip()
+    indexM = metersStripped.index("m")
+    newLength = float(metersStripped[:indexM])
+    meterageOnly.append(newLength)
 
-df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing)), columns = ['name', 'fibre', 'length', 'weight', 'pricing'])
+for old in pricing:
+    priceStrip = old.strip()
+    newPrice = float(priceStrip[1:])
+    strippedPricing.append(newPrice)
+    
+# do the maths for seperate columns to figure out pound per meter
 
-# print(df)
+
+df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing, meterageOnly, strippedPricing)), columns = ['name', 'fibre', 'length','weight', 'pricing', 'meters', 'price(kinda)'])
 
 writer = pd.ExcelWriter('LoveCraftTrial.xlsx', engine='xlsxwriter')
 df.to_excel(writer, sheet_name='welcome')

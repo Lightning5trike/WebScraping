@@ -5,8 +5,10 @@ import pandas as pd
 yarnName = []
 fibres = []
 length = []
+meterageOnly = []
 weight = []
 pricing = []
+strippedPricing = []
 
 counter = 1
 
@@ -32,10 +34,25 @@ while counter <= 28:
             yarnName.append(name.get_text().strip())
             pricing.append(price.get_text().strip())
 
+for meters in length:
+    metersStripped = meters.strip()
+    try:
+        indexM = metersStripped.index("m")
+        newLength = float(metersStripped[:indexM])
+    except ValueError:
+        newLength = None
+    meterageOnly.append(newLength)
 
-    df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing)), columns = ['name', 'fibre', 'length', 'weight', 'pricing'])
+for old in pricing:
+    priceStrip = ''.join(filter(str.isdigit, old))
+    if priceStrip:
+        newPrice = float(priceStrip) / 100
+        strippedPricing.append(newPrice)
+        
+    # do the maths for seperate columns to figure out pound per meter
 
-    # print(df)
+
+    df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing, meterageOnly, strippedPricing)), columns = ['name', 'fibre', 'length','weight', 'pricing', 'meters', 'price(stripped)'])
 
     writer = pd.ExcelWriter('LoveCraftsScrape.xlsx', engine='xlsxwriter')
     df.to_excel(writer, sheet_name='welcome')
