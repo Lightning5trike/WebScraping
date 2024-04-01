@@ -10,6 +10,7 @@ meterageOnly = []
 weight = []
 pricing = []
 strippedPricing = []
+pricePerMeter = []
 
 page_to_scrape = requests.get("https://www.lovecrafts.com/en-gb/l/yarns?filter-yarnWeight.en-GB=Aran&filter-fibers.en-GB=Wool")
 soup = BeautifulSoup(page_to_scrape.text, "html.parser")
@@ -30,19 +31,26 @@ for name, yarn, price in zip(yarnTitle, yarnType, yarnPrice):
 
 for meters in length:
     metersStripped = meters.strip()
-    indexM = metersStripped.index("m")
-    newLength = float(metersStripped[:indexM])
+    try:
+        indexM = metersStripped.index("m")
+        newLength = float(metersStripped[:indexM])
+    except ValueError:
+        newLength = None
     meterageOnly.append(newLength)
 
 for old in pricing:
-    priceStrip = old.strip()
-    newPrice = float(priceStrip[1:])
-    strippedPricing.append(newPrice)
+    priceStrip = ''.join(filter(str.isdigit, old))
+    if priceStrip:
+        newPrice = float(priceStrip) / 100
+        strippedPricing.append(newPrice)
     
 # do the maths for seperate columns to figure out pound per meter
+for x, y in zip(meterageOnly, strippedPricing):
+    ppm = round(y/x, 4)
+    pricePerMeter.append(ppm)
 
 
-df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing, meterageOnly, strippedPricing)), columns = ['name', 'fibre', 'length','weight', 'pricing', 'meters', 'price(kinda)'])
+df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing, meterageOnly, strippedPricing, pricePerMeter)), columns = ['name', 'fibre', 'length','weight', 'pricing', 'meters', 'price(kinda)', 'ppm'])
 
 writer = pd.ExcelWriter('LoveCraftTrial.xlsx', engine='xlsxwriter')
 df.to_excel(writer, sheet_name='welcome')

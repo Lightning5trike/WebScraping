@@ -9,10 +9,12 @@ meterageOnly = []
 weight = []
 pricing = []
 strippedPricing = []
+pricePerMeter = []
 
 counter = 1
 
 while counter <= 28:
+
     if counter == 1:
         page_to_scrape = requests.get("https://www.lovecrafts.com/en-gb/l/yarns")
     elif counter > 1:
@@ -40,7 +42,7 @@ for meters in length:
         indexM = metersStripped.index("m")
         newLength = float(metersStripped[:indexM])
     except ValueError:
-        newLength = None
+        newLength = 1
     meterageOnly.append(newLength)
 
 for old in pricing:
@@ -49,10 +51,13 @@ for old in pricing:
         newPrice = float(priceStrip) / 100
         strippedPricing.append(newPrice)
         
-    # do the maths for seperate columns to figure out pound per meter
+
+for x, y in zip(meterageOnly, strippedPricing):
+    ppm = round(y/x, 4)
+    pricePerMeter.append(ppm)
 
 
-    df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing, meterageOnly, strippedPricing)), columns = ['name', 'fibre', 'length','weight', 'pricing', 'meters', 'price(stripped)'])
+    df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing, meterageOnly, strippedPricing, pricePerMeter)), columns = ['name', 'fibre', 'length','weight', 'pricing', 'meters', 'price(kinda)', 'ppm'])
 
     writer = pd.ExcelWriter('LoveCraftsScrape.xlsx', engine='xlsxwriter')
     df.to_excel(writer, sheet_name='welcome')
