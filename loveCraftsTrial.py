@@ -15,24 +15,22 @@ pricePerMeter = []
 page_to_scrape = requests.get("https://www.lovecrafts.com/en-gb/l/yarns?filter-yarnWeight.en-GB=Aran&filter-fibers.en-GB=Wool")
 soup = BeautifulSoup(page_to_scrape.text, "html.parser")
 #the inspect google thing
-yarnTitle = soup.findAll("h2", attrs={"class":"product-card__title"})
-yarnType = soup.findAll("p", attrs={"class":"product-card__subtitle"})
-yarnPrice = soup.findAll("span", attrs={"class":"lc-price__regular"})
+yarnCards = soup.findAll("div", attrs={"class":"product-card__wrapper"})
+for card in yarnCards:
+    yarnTitle = card.find("h2", attrs={"class":"product-card__title"}).get_text().strip()
+    yarnType = card.find("p", attrs={"class":"product-card__subtitle"}).get_text().strip()
+    yarnPrice = card.find("span", attrs={"class": "lc-price__regular"})
+    if not yarnPrice:
+        yarnPrice = card.find("del", attrs={"class": "lc-price__old"})
 
 #goes through each yarn on the page and strips it of the unnecessary info
 #splits it into 3 seperate piece of information
-for name, yarn, price in zip(yarnTitle, yarnType, yarnPrice):
-    yarn_text = yarn.get_text().strip()
-    splitter = yarn_text.split(", ")
+    splitter = yarnType.split(", ")
     if len(splitter) == 3:
         #adds each piece of info into the correct list
         fibres.append(splitter[0])
         length.append(splitter[1])
         weight.append(splitter[2])
-        #removes the unncessar information from those 2 categories
-        yarnName.append(name.get_text().strip())
-        pricing.append(price.get_text().strip())
-
 
 #goes through the length and then splits at the m so i can get the meters
 for meters in length:
@@ -61,18 +59,19 @@ for x, y in zip(meterageOnly, strippedPricing):
     
 df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing, meterageOnly, strippedPricing, pricePerMeter)), columns = ['name', 'fibre', 'length','weight', 'pricing', 'meters', 'price(kinda)', 'ppm'])
 
-# print(df)
+print(df)
 
-writer = pd.ExcelWriter('LoveCraftTrial.xlsx', engine='xlsxwriter')
-df.to_excel(writer, sheet_name='welcome')
+# writer = pd.ExcelWriter('LoveCraftTrial.xlsx', engine='xlsxwriter')
+# df.to_excel(writer, sheet_name='welcome')
 
-workbook = writer.book
-worksheet = writer.sheets['welcome']
+# workbook = writer.book
+# worksheet = writer.sheets['welcome']
 
-format1 = workbook.add_format({'num_format': '0.0000'})
-worksheet.set_column('I:I', None, format1)
+# #addding the format to make it to 4dp instead of 
+# format1 = workbook.add_format({'num_format': '0.0000'})
+# worksheet.set_column('I:I', None, format1)
 
-writer.close()
+# writer.close()
 
 
 
