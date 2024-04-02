@@ -45,7 +45,7 @@ for meters in length:
         newLength = 1
     meterageOnly.append(newLength)
 
-#
+
 for old in pricing:
     priceStrip = ''.join(filter(str.isdigit, old))
     if priceStrip:
@@ -57,15 +57,20 @@ for x, y in zip(meterageOnly, strippedPricing):
     ppm = float(y)/float(x)
     ppm_rounded = round(ppm, 4)
     pricePerMeter.append(ppm_rounded)
-
-
+# print(pricePerMeter)
+    
 df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing, meterageOnly, strippedPricing, pricePerMeter)), columns = ['name', 'fibre', 'length','weight', 'pricing', 'meters', 'price(kinda)', 'ppm'])
+
+# print(df)
 
 writer = pd.ExcelWriter('LoveCraftTrial.xlsx', engine='xlsxwriter')
 df.to_excel(writer, sheet_name='welcome')
 
 workbook = writer.book
-worksheer = writer.sheets['welcome']
+worksheet = writer.sheets['welcome']
+
+format1 = workbook.add_format({'num_format': '0.0000'})
+worksheet.set_column('I:I', None, format1)
 
 writer.close()
 

@@ -57,12 +57,17 @@ for x, y in zip(meterageOnly, strippedPricing):
     pricePerMeter.append(ppm)
 
 
-    df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing, meterageOnly, strippedPricing, pricePerMeter)), columns = ['name', 'fibre', 'length','weight', 'pricing', 'meters', 'price(kinda)', 'ppm'])
+df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing, meterageOnly, strippedPricing, pricePerMeter)), columns = ['name', 'fibre', 'length','weight', 'pricing', 'meters', 'price(kinda)', 'ppm'])
 
-    writer = pd.ExcelWriter('LoveCraftsWebscrape.xlsx', engine='xlsxwriter')
-    df.to_excel(writer, sheet_name='welcome')
+# print(df)
 
-    workbook = writer.book
-    worksheer = writer.sheets['welcome']
+writer = pd.ExcelWriter('LoveCraftTrial.xlsx', engine='xlsxwriter')
+df.to_excel(writer, sheet_name='welcome')
 
-    writer.close()
+workbook = writer.book
+worksheet = writer.sheets['welcome']
+
+format1 = workbook.add_format({'num_format': '0.0000'})
+worksheet.set_column('I:I', None, format1)
+
+writer.close()
