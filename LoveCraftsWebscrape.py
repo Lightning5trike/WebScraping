@@ -14,7 +14,6 @@ pricePerMeter = []
 counter = 1
 
 while counter <= 28:
-
     if counter == 1:
         page_to_scrape = requests.get("https://www.lovecrafts.com/en-gb/l/yarns")
     elif counter > 1:
@@ -30,11 +29,23 @@ while counter <= 28:
         yarn_text = yarn.get_text().strip()
         splitter = yarn_text.split(", ")
         if len(splitter) == 3:
+            #adds each piece of info into the correct list
             fibres.append(splitter[0])
             length.append(splitter[1])
             weight.append(splitter[2])
+            #removes the unncessary information from those 2 categories
             yarnName.append(name.get_text().strip())
-            pricing.append(price.get_text().strip())
+
+            #for when yarn is on discount getting the discounted value
+            #it shows 2 values this splits it
+            price_text = price.get_text().strip()
+            indexN = price_text.find("\n") 
+            if indexN != -1: 
+                priceStr = price_text[:indexN].strip()
+            else:
+                priceStr = price_text.strip()
+            pricing.append(priceStr)
+        
 
 for meters in length:
     metersStripped = meters.strip()
@@ -57,12 +68,15 @@ for x, y in zip(meterageOnly, strippedPricing):
     pricePerMeter.append(ppm)
 
 
-    df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing, meterageOnly, strippedPricing, pricePerMeter)), columns = ['name', 'fibre', 'length','weight', 'pricing', 'meters', 'price(kinda)', 'ppm'])
+df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing, meterageOnly, strippedPricing, pricePerMeter)), columns = ['name', 'fibre', 'length','weight', 'pricing', 'meters', 'price(kinda)', 'ppm'])
 
-    writer = pd.ExcelWriter('LoveCraftsWebscrape.xlsx', engine='xlsxwriter')
-    df.to_excel(writer, sheet_name='welcome')
+writer = pd.ExcelWriter('LoveCraftsWebscrape.xlsx', engine='xlsxwriter')
+df.to_excel(writer, sheet_name='welcome')
 
-    workbook = writer.book
-    worksheer = writer.sheets['welcome']
+workbook = writer.book
+worksheet = writer.sheets['main']
 
-    writer.close()
+format1 = workbook.add_format({'num_format': '0.0000'})
+worksheet.set_column('I:I', None, format1)
+
+writer.close()
