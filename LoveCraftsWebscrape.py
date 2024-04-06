@@ -82,6 +82,8 @@ with pd.ExcelWriter('LoveCraftsWebscrape.xlsx', engine='xlsxwriter') as writer:
     dfAran.to_excel(writer, sheet_name='Aran Yarns')
     dfChunky = df1[df1['weight'] == 'Chunky']
     dfChunky.to_excel(writer, sheet_name='Chunky Yarns')
+    dfWorsted = df1[df1['weight'] == 'Worsted']
+    dfWorsted.to_excel(writer, sheet_name='Worsted Yarns')
 
     #formatting
     workbook = writer.book
@@ -95,5 +97,7 @@ with pd.ExcelWriter('LoveCraftsWebscrape.xlsx', engine='xlsxwriter') as writer:
     worksheet3.set_column('I:I', None, format1)
     worksheet4 = writer.sheets['Chunky Yarns']
     worksheet4.set_column('I:I', None, format1)
+    worksheet5 = writer.sheets['Worsted Yarns']
+    worksheet5.set_column('I:I', None, format1)
 
 
