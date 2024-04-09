@@ -70,34 +70,21 @@ for x, y in zip(meterageOnly, strippedPricing):
 
 
 
-#writing to excel sheet
+df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing, meterageOnly, strippedPricing, pricePerMeter)), columns=['name', 'fibres', 'length', 'weight', 'pricing', 'meters', 'price(kinda)', 'ppm'])
+
 with pd.ExcelWriter('LoveCraftsWebscrape.xlsx', engine='xlsxwriter') as writer:
-    df1 = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing, meterageOnly, strippedPricing, pricePerMeter)), columns=['name', 'fibre', 'length', 'weight', 'pricing', 'meters', 'price(kinda)', 'ppm'])
-    df1.to_excel(writer, sheet_name='main')
-
-    #filtering each sheet by weight of yarn
-    dfDK = df1[df1['weight'] == 'DK']
-    dfDK.to_excel(writer, sheet_name='DK Yarns')
-    dfAran = df1[df1['weight'] == 'Aran']
-    dfAran.to_excel(writer, sheet_name='Aran Yarns')
-    dfChunky = df1[df1['weight'] == 'Chunky']
-    dfChunky.to_excel(writer, sheet_name='Chunky Yarns')
-    dfWorsted = df1[df1['weight'] == 'Worsted']
-    dfWorsted.to_excel(writer, sheet_name='Worsted Yarns')
-
-    #formatting
+    df.to_excel(writer, sheet_name='main')
     workbook = writer.book
     format1 = workbook.add_format({'num_format': '0.0000'})
-    
-    worksheet1 = writer.sheets['main']
-    worksheet1.set_column('I:I', None, format1)
-    worksheet2 = writer.sheets['DK Yarns']
-    worksheet2.set_column('I:I', None, format1)
-    worksheet3 = writer.sheets['Aran Yarns']
-    worksheet3.set_column('I:I', None, format1)
-    worksheet4 = writer.sheets['Chunky Yarns']
-    worksheet4.set_column('I:I', None, format1)
-    worksheet5 = writer.sheets['Worsted Yarns']
-    worksheet5.set_column('I:I', None, format1)
 
+    sheets = {
+        'weight': ['DK', 'Aran', 'Chunky', 'Worsted'],
+        'fibres': ['100% Acrylic', '100% Cotton', '100% Wool']
+    }
 
+    for category, values in sheets.items():
+        for value in values:
+            filtered_df = df[df[category] == value]
+            filtered_df.to_excel(writer, sheet_name=f'{value} Yarns')
+            worksheet = writer.sheets[f'{value} Yarns']
+            worksheet.set_column('I:I', None, format1)
