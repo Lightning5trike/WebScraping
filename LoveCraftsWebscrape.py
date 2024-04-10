@@ -57,17 +57,22 @@ for meters in length:
         newLength = 1
     meterageOnly.append(newLength)
 
+# Strip and convert pricing to float
 for old in pricing:
     priceStrip = ''.join(filter(str.isdigit, old))
     if priceStrip:
         newPrice = float(priceStrip) / 100
         strippedPricing.append(newPrice)
+    else:
+        strippedPricing.append(1) 
 
-#math to make ppm
+# math to make ppm
 for x, y in zip(meterageOnly, strippedPricing):
-    ppm = round((y/x), 4)
-    pricePerMeter.append(ppm)
-
+    if y is not None:
+        ppm = round((y/x), 4)
+        pricePerMeter.append(ppm)
+    else:
+        pricePerMeter.append(1)
 
 
 df = pd.DataFrame(list(zip(yarnName, fibres, length, weight, pricing, meterageOnly, strippedPricing, pricePerMeter)), columns=['name', 'fibres', 'length', 'weight', 'pricing', 'meters', 'price(kinda)', 'ppm'])
