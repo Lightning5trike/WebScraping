@@ -1,9 +1,17 @@
 from fastapi import FastAPI
-
+from LoveCraftsWebscrape import LovecraftsScraper
 
 app = FastAPI()
 
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+
 @app.get("/yarns")
-async def all_yarn():
-    #class(df) recieve df return df in dict
-    return dict_of_df.get_all_yarn()
+async def get_yarns():
+    scraper = LovecraftsScraper()
+    df = scraper.run()
+    if df.empty:
+        return {"error": "No data scraped"}
+    return df.to_dict(orient="records")
+
