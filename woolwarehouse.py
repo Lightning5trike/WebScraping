@@ -58,9 +58,8 @@ while counter <= 27:
         pricePerGram.append(ppg)
         
 
-    df = pd.DataFrame(list(zip(
-            yarnName, fibres, thickness,
-            pricing, weight, pricing, pricePerGram
-        )), columns=['name', 'fibres', 'thickness', 'pricing', 'weight(g)', 'price(£)', 'ppg'])
+df = pd.DataFrame(list(zip(
+                yarnName, fibres, thickness, weight, pricing, pricePerGram
+            )), columns=['name', 'fibres', 'thickness', 'weight(g)', 'price(£)', 'ppg'])
     
-    print(df)
+print(df)

@@ -69,7 +69,6 @@ for old in pricing:
 
 
 df = pd.DataFrame(list(zip(
-            yarnName, fibres, thickness,
-            pricing, weight, pricing, pricePerGram
-        )), columns=['name', 'fibres', 'thickness', 'pricing', 'weight(g)', 'price(£)', 'ppg'])
+                yarnName, fibres, thickness, weight, pricing, pricePerGram
+            )), columns=['name', 'fibres', 'thickness', 'weight(g)', 'price(£)', 'ppg'])
 
