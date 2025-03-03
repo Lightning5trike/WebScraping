@@ -3,6 +3,7 @@ import requests
 import pandas as pd
 import re
 
+#SuperClass that does the scraping and gets all the info for the columns
 class YarnScraper:
     def __init__(self, base_url, pages, source):
         self.base_url = base_url
@@ -28,8 +29,9 @@ class YarnScraper:
         return self.to_dataframe()
 
     def extract_data(self, soup):
-        pass  # To be implemented by subclasses
+        pass  # implemented by subclasses
 
+    #calculate price per gram
     def calculate_ppg(self):
         for x, y in zip(self.weight, self.pricing):
             try:
@@ -151,7 +153,7 @@ class WoolWarehouseScraper(YarnScraper):
             self.thickness.append(split_details[0] if split_details else None)
             self.fibres.append(" ".join(split_details[1:]))
 
-# Running all scrapers
+# Runs all scrapers
 dfs = [scraper().scrape() for scraper in [LittleWoolShopScraper, LoveCraftsScraper, WoolBoxScraper, WoolWarehouseScraper]]
 final_df = pd.concat(dfs, ignore_index=True)
 # print(final_df)
