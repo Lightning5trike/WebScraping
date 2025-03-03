@@ -1,6 +1,5 @@
 from fastapi import FastAPI
-from LoveCraftsWebscrape import LovecraftsScraper
-
+from webscraper_classes import *
 app = FastAPI()
 
 @app.get("/")
@@ -9,9 +8,9 @@ async def root():
 
 @app.get("/yarns")
 async def get_yarns():
-    scraper = LovecraftsScraper()
-    df = scraper.run()
-    if df.empty:
+    dfs = [scraper().scrape() for scraper in [LittleWoolShopScraper, LoveCraftsScraper, WoolBoxScraper, WoolWarehouseScraper]]
+    final_df = pd.concat(dfs, ignore_index=True)
+    if final_df.empty:
         return {"error": "No data scraped"}
-    return df.to_dict(orient="records")
+    return final_df.to_dict(orient="records")
 
