@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
-import requests
 import pandas as pd
+import requests
 import re
 
 #SuperClass that does the scraping and gets all the info for the columns
@@ -16,13 +16,13 @@ class YarnScraper:
         self.pricing = []
         self.pricePerGram = []
 
-    def fetch_page(self, counter):
+    def get_page(self, counter):
         url = self.base_url if counter == 1 else self.base_url + f"?page={counter}"
         return requests.get(url).text
 
     def scrape(self):
         for counter in range(1, self.pages + 1):
-            soup = BeautifulSoup(self.fetch_page(counter), "html.parser")
+            soup = BeautifulSoup(self.get_page(counter), "html.parser")
             self.extract_data(soup)
 
         self.calculate_ppg()
