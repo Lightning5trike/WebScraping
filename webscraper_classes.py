@@ -152,8 +152,3 @@ class WoolWarehouseScraper(YarnScraper):
             split_details = re.split("(\d+%)", details[1]) if len(details) > 1 else []
             self.thickness.append(split_details[0] if split_details else None)
             self.fibres.append(" ".join(split_details[1:]))
-
-# Runs all scrapers
-dfs = [scraper().scrape() for scraper in [LittleWoolShopScraper, LoveCraftsScraper, WoolBoxScraper, WoolWarehouseScraper]]
-final_df = pd.concat(dfs, ignore_index=True)
-# print(final_df)

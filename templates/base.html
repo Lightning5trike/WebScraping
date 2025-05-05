@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/b429851dc5.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <nav>
+        <ul class="sidebar">
+            <li onclick=hideSidebar()><i class="fa-solid fa-xmark"></i></li>
+            <li><a href="#">Yarn Compendium</a></li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Info</a></li>
+            <li><a href="#">price comparison</a></li>
+            <li><a href="#">Colour match</a></li>
+        </ul>
+        <ul>
+            <li><a href="#">Yarn Compendium</a></li>
+            <li class="hideOnMobile"><a href="#">Home</a></li>
+            <li class="hideOnMobile"><a href="#">Info</a></li>
+            <li class="hideOnMobile"><a href="#">price comparison</a></li>
+            <li class="hideOnMobile"><a href="#">Colour match</a></li>
+            <li class="menu-button" onclick=showSidebar()><i class="fa-solid fa-bars"></i></li>
+        </ul>
+    </nav>
+    {% block body %}{% endblock %}
+    <script>
+        function showSidebar(){
+            const sidebar = document.querySelector('.sidebar')
+            sidebar.style.display = 'flex'
+        }
+        function hideSidebar(){
+            const sidebar = document.querySelector('.sidebar')
+            sidebar.style.display = 'none'
+        }
+    </script>
+</body>
+</html>

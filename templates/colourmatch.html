@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <style>
+        .image-container {
+            text-align: center;
+        }
+        .data-table {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th, .data-table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <form action="{{ url_for('colourMatch_tohtml') }}" enctype="multipart/form-data" method="POST">
+        <input name="img" type="file"/>
+        <input type="submit"/>
+    </form>
+
+    {% if img %}
+    <div class="image-container">
+        <h1>Rendered Image</h1>
+        <img src="{{ img }}" alt="Uploaded Image" style="max-width: 400px; max-height: 400px;"/>
+    </div>
+
+    {% if top_rows %}
+    <h2>Top 5 Yarn Matches</h2>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Link</th>
+                <th>RGB</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in top_rows%}
+                <tr>
+                    <td>{{ row['name'] }}</td>
+                    <td><img src="{{ row['img'] }}" alt="{{ row['name'] }}" style="max-width: 100px; max-height: 100px;"/></td>
+                    <td><a href="{{ row['link'] }}" target="_blank">Link</a></td>
+                    <td>{{ row['rgb'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    {% else %}
+    <h1>Image will be rendered here...</h1>
+    {% endif %}
+{% endblock %}
