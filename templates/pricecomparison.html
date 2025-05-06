@@ -6,6 +6,8 @@
 
 {% block body %}
 <h1>comparison table</h1>
+
+<input type="text" id="searchInput" placeholder="Search..." style="margin-bottom: 10px; padding: 8px; width: 100%; max-width: 300px; display: block;">
 <table>
     <thead>
       <tr>
@@ -28,5 +30,20 @@
     </tbody>
 
 </table>
+
+<!-- https://stackoverflow.com/questions/53686579/how-to-implement-a-javascript-search-filter-function-in-a-table -->
+<script>
+  document.getElementById("searchInput").addEventListener("input", function () {
+      let filter = this.value.toLowerCase();
+      let rows = document.querySelectorAll("table tbody tr");
+
+      rows.forEach(row => {
+          let match = Array.from(row.cells).some(cell =>
+              cell.textContent.toLowerCase().includes(filter)
+          );
+          row.style.display = match || filter === "" ? "" : "none";
+      });
+  });
+</script>
 
 {% endblock %}

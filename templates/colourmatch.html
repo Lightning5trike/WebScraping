@@ -1,20 +1,89 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <style>
-        .image-container {
-            text-align: center;
-        }
-        .data-table {
-            margin-top: 20px;
-            width: 100%;
-            border-collapse: collapse;
-        }
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .upload-form {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+        padding: 0 10px;
+    }
+
+    .upload-box {
+        padding: 20px;
+        border: 1px solid #ccc;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        background-color: #f9f9f9;
+        box-sizing: border-box;
+    }
+
+    .upload-box input[type="file"],
+    .upload-box input[type="submit"] {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+        padding: 10px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    .image-container {
+        text-align: center;
+        margin-top: 60px;
+        padding: 0 10px;
+    }
+
+    .image-container img {
+        max-width: 100%;
+        height: auto;
+        max-height: 400px;
+    }
+
+    .data-table {
+        margin: 30px auto;
+        width: 90%;
+        max-width: 800px;
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    .data-table th, .data-table td {
+        padding: 10px;
+        border: none; /* no visible borders */
+        word-wrap: break-word;
+    }
+
+    .data-table img {
+        max-width: 100px;
+        max-height: 100px;
+        display: inline-block;
+    }
+
+    h1, h2 {
+        text-align: center;
+        padding: 0 10px;
+    }
+
+    @media (max-width: 600px) {
         .data-table th, .data-table td {
-            padding: 8px;
-            border: 1px solid #ddd;
+            font-size: 14px;
+            padding: 6px;
         }
-    </style>
+
+        .data-table img {
+            max-width: 80px;
+            max-height: 80px;
+        }
+    }
+</style>
 {% endblock %}
 
 {% block body %}
@@ -37,7 +106,7 @@
                 <th>Name</th>
                 <th>Image</th>
                 <th>Link</th>
-                <th>RGB</th>
+                <!-- <th>RGB</th> -->
             </tr>
         </thead>
         <tbody>
@@ -46,7 +115,7 @@
                     <td>{{ row['name'] }}</td>
                     <td><img src="{{ row['img'] }}" alt="{{ row['name'] }}" style="max-width: 100px; max-height: 100px;"/></td>
                     <td><a href="{{ row['link'] }}" target="_blank">Link</a></td>
-                    <td>{{ row['rgb'] }}</td>
+                    <!-- <td>{{ row['rgb'] }}</td> -->
                 </tr>
             {% endfor %}
         </tbody>
