@@ -20,6 +20,7 @@ nav ul{
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    list-style-type: none;
 }
 
 nav li{
@@ -48,7 +49,8 @@ nav li:first-child{
     z-index: 999;
     background-color: white;
     backdrop-filter: blur(10px);
-    box-shadow: -10px 0 10px rgba(255, 255, 255, 0.2);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
     display: none;
     flex-direction: column;
     align-items: flex-start;
@@ -73,12 +75,19 @@ table {
     width: 100%;
 }
 
+
+
 @media(max-width: 800px){
     .hideOnMobile{
         display: none;
     }
-    .menu-button{
-        display: block;
+    .menu-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        cursor: pointer;
+        padding-right: 10px;
     }
 }
 

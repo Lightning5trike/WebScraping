@@ -1,13 +1,69 @@
 {% extends 'base.html' %}
 
 {% block head %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
 
+  #searchInput {
+    padding: 14px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .table-container {
+    max-width: 100%;
+    overflow-x: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px; 
+  }
+
+  th, td {
+    text-align: left;
+    padding: 12px 8px;
+    border: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f4f4f4;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  @media (max-width: 600px) {
+    table {
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 10px 6px;
+    }
+  }
+</style>
 {% endblock %}
 
 {% block body %}
+<br>
 <h1>comparison table</h1>
-
+<br>
 <input type="text" id="searchInput" placeholder="Search..." style="margin-bottom: 10px; padding: 8px; width: 100%; max-width: 300px; display: block;">
+<div class="table-container">
 <table>
     <thead>
       <tr>
@@ -30,7 +86,7 @@
     </tbody>
 
 </table>
-
+</div>
 <!-- https://stackoverflow.com/questions/53686579/how-to-implement-a-javascript-search-filter-function-in-a-table -->
 <script>
   document.getElementById("searchInput").addEventListener("input", function () {

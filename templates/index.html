@@ -1,10 +1,98 @@
 {% extends 'base.html' %}
 
 {% block head %}
-
 {% endblock %}
 
 {% block body %}
-<h1>Template</h1>
+<style>
+    body {
+    font-family: 'Arial', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fdfcfb;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0 20px;
+}
 
+h1, h2 {
+    color: #874f33;
+    text-align: center;
+    margin-top: 30px;
+}
+
+h3, h4 {
+    color: #5c3d2e;
+    margin-top: 15px;
+}
+
+#info-section {
+    background-color: #fff7f0;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 900px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+p {
+    margin-bottom: 12px;
+}
+
+a {
+    color: #cc5e3f;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    display: block;
+    margin: 10px auto;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+</style>
+<br>
+<h1>Welcome to the yarn compendium</h1>
+<h2>Your one stop shop for all information about yarn</h2>
+<br>
+
+<section id="info-section">
+    <h2>Information</h2>
+    <br>
+
+    <h3>Fibres</h3>
+    <p>When choosing yarn for a project it is important to consider what qualities you are looking for in a yarn. Below the 3 main types of yarn have been outlined and from here you can decide what types of yarn you would like for your project.</p>
+    <h4>Animal Fibres</h4>
+    <p>Animal fibers are known for their warmth and insulating properties but are avoided by vegan makers or those with certain allergies.</p>
+    <p>They are typically very warm, very soft, breathable, and quite stretchy. On the negative side, they can also pill and felt, and are not machine washable.</p>
+    <p>Examples: Sheep wool, alpaca, yak, mohair, angora, cashmere, camel, qiviut, slik.</p>
+    
+    <h4>Plant Fibres</h4>
+    <p>Plant fibers require some processing to turn raw materials into yarn. While plant fibers share commone qualities like moisture-wicking and easy care, they also share some negative traits, like heaviness and inelasticity.</p>
+    <p>They are usually not very warm, can absorb a lot of water, some of them have an excellent stitch definition, and they are often machine washable. They are not very stretchy and can be more difficult to knit with.</p>
+    <p>Examples: Cotton, linen, nettle, bamboo.</p>
+    
+    <h4>Synthetic Fibres</h4>
+    <p>Synthetic fibers are made using chemical processes rather than naturally-occurring substances. While typically easier to find and care for, more makers are considering the environmental impact of synthetic yarns before purchase.</p>
+    <p>Often very inexpensive, quite soft, and quite versatile. But not breathable at all, and often not the highest comfort factor.</p>
+    <p>Examples: Nylon, Acrylic, Polyamid.</p>
+    <br>
+
+    <h3>Size and Guage</h3>
+    <img src="https://elizabethsmithknits.com/wp-content/uploads/2023/10/CraftYarnCouncil-YarnWeightClasses.png" alt="Yarn Guage Size Table" width="500" height="250">
+    <br>
+
+    <h4>Pattern Libraries</h4>
+    <a href="https://www.ravelry.com/">Ravelry</a>
+    <p>Ravelry is a community site, an organizational tool, and a yarn & pattern database for knitters and crocheters</p>
+    <a href="https://www.garnstudio.com">Drops Design</a>
+    <p>Here you'll find more than 160.000 free knitting patterns and crochet patterns with tutorial videos</p>
+
+</section>
 {% endblock %}

@@ -8,24 +8,26 @@
     {% block head %}{% endblock %}
 </head>
 <body>
+    <div class="main-content" id="main-content">
     <nav>
         <ul class="sidebar">
-            <li onclick=hideSidebar()><i class="fa-solid fa-xmark"></i></li>
-            <li><a href="#">Yarn Compendium</a></li>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Info</a></li>
-            <li><a href="#">price comparison</a></li>
-            <li><a href="#">Colour match</a></li>
+            <li class="close-button", onclick=hideSidebar()><i class="fa-solid fa-xmark"></i></li>
+            <li><a href="{{ url_for('index') }}">Yarn Compendium</a></li>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('index') }}#info-section">Info</a></li>
+            <li><a href="{{ url_for('pricecomparison_tohtml') }}">Price Comparison</a></li>
+            <li><a href="{{ url_for('colourMatch_tohtml') }}">Colour Match</a></li>
         </ul>
         <ul>
             <li><a href="#">Yarn Compendium</a></li>
-            <li class="hideOnMobile"><a href="#">Home</a></li>
-            <li class="hideOnMobile"><a href="#">Info</a></li>
-            <li class="hideOnMobile"><a href="#">price comparison</a></li>
-            <li class="hideOnMobile"><a href="#">Colour match</a></li>
+            <li class="hideOnMobile"><a href="{{ url_for('index') }}">Home</a></li>
+            <li class="hideOnMobile"><a href="{{ url_for('index') }}#info-section">Info</a></li>
+            <li class="hideOnMobile"><a href="{{ url_for('pricecomparison_tohtml') }}">Price Comparison</a></li>
+            <li class="hideOnMobile"><a href="{{ url_for('colourMatch_tohtml') }}">Colour Match</a></li>
             <li class="menu-button" onclick=showSidebar()><i class="fa-solid fa-bars"></i></li>
         </ul>
     </nav>
+    </div>
     {% block body %}{% endblock %}
     <script>
         function showSidebar(){

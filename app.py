@@ -15,7 +15,7 @@ dfs = [scraper().scrape() for scraper in [LittleWoolShopScraper, LoveCraftsScrap
 final_df = pd.concat(dfs, ignore_index=True)
 
 # Upload folder config
-upload_folder = os.path.join('images', 'uploads')
+upload_folder = os.path.join('static', 'uploads')
 app.config['UPLOAD'] = upload_folder
 
 
