@@ -1,5 +1,8 @@
 import logging
 
+
+# https://flask.palletsprojects.com/en/stable/logging/
+# https://www.geeksforgeeks.org/logging-in-python/
 logger = logging.getLogger('colour_matcher_logger')
 logger.setLevel(logging.DEBUG)
 

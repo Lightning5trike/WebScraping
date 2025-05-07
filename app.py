@@ -1,12 +1,12 @@
 from flask import Flask, render_template, url_for, request, session, redirect
+from werkzeug.utils import secure_filename
+from logger_configuration import logger
 from webscraper_classes import *
 from colour_matcher import *
-from werkzeug.utils import secure_filename
 import pandas as pd
 import os
 
-from logger_configuration import logger
-
+#https://www.youtube.com/watch?v=yKHJsLUENl0&t=315s&pp=ygUWYmFzaWMgZmxhc2sgdG8gZG8gYXBwIA%3D%3D
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 

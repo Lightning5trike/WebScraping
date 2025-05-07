@@ -13,16 +13,15 @@ import re
 # Colour dictionary and RGB values
 # https://stackoverflow.com/questions/54242194/find-the-closest-color-to-a-color-from-given-list-of-colors
 colour_dict = {
-    'Red': 2000, 'Orange': 2001, 'Yellow': 2002, 'Green': 2003, 'Blue': 2004,
-    'Purple': 2005, 'Pink': 2006, 'Black': 2007, 'White': 2008, 'Cream': 2009,
-    'Beige': 2010, 'Grey': 2011, 'Brown': 2012, 'Gold': 2001
+    'Red': 2000, 'Orange': 2001, 'Yellow': 2002, 'Green': 2003, 'Blue': 2004, 'Purple': 2005, 
+    'Pink': 2006, 'Black': 2007, 'White': 2008, 'Cream': 2009, 'Beige': 2010, 'Grey': 2011, 
+    'Brown': 2012, 'Gold': 2001
 }
 
 colour_rgb_dict = {
-    'Red': (255, 0, 0), 'Orange': (255, 165, 0), 'Yellow': (255, 255, 0),
-    'Green': (0, 255, 0), 'Blue': (0, 0, 255), 'Purple': (160, 32, 240),
-    'Pink': (255, 192, 203), 'Black': (0, 0, 0), 'White': (255, 255, 255),
-    'Cream': (255, 253, 208), 'Beige': (245, 245, 220), 'Grey': (190, 190, 190),
+    'Red': (255, 0, 0), 'Orange': (255, 165, 0), 'Yellow': (255, 255, 0), 'Green': (0, 255, 0), 
+    'Blue': (0, 0, 255), 'Purple': (160, 32, 240), 'Pink': (255, 192, 203), 'Black': (0, 0, 0), 
+    'White': (255, 255, 255), 'Cream': (255, 253, 208), 'Beige': (245, 245, 220), 'Grey': (190, 190, 190), 
     'Brown': (160, 82, 45), 'Gold': (255, 165, 0)
 }
 

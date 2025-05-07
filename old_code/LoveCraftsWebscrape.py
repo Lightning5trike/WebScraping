@@ -72,3 +72,4 @@ df = pd.DataFrame(list(zip(
                 yarnName, fibres, thickness, weight, pricing, pricePerGram
             )), columns=['name', 'fibres', 'thickness', 'weight(g)', 'price(£)', 'ppg'])
 
+print(df)
